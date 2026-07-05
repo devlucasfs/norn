@@ -1,0 +1,14 @@
+/home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/deps/clang_sys-63964bad4eb96018.d: /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/lib.rs /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/support.rs /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/link.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/macros.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/common.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/dynamic.rs
+
+/home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/deps/libclang_sys-63964bad4eb96018.rlib: /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/lib.rs /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/support.rs /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/link.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/macros.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/common.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/dynamic.rs
+
+/home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/deps/libclang_sys-63964bad4eb96018.rmeta: /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/lib.rs /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/support.rs /home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/link.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/macros.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/common.rs /home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/dynamic.rs
+
+/home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/lib.rs:
+/home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/support.rs:
+/home/dev_lucasfs/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clang-sys-1.8.1/src/link.rs:
+/home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/macros.rs:
+/home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/common.rs:
+/home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out/dynamic.rs:
+
+# env-dep:OUT_DIR=/home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/build/clang-sys-b16ff35639fa055c/out

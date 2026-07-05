@@ -1,0 +1,1 @@
+/home/dev_lucasfs/Documents/carla/pre-compiler/target/debug/pre-compiler: /home/dev_lucasfs/Documents/carla/pre-compiler/src/eva.rs /home/dev_lucasfs/Documents/carla/pre-compiler/src/eva_lib.rs /home/dev_lucasfs/Documents/carla/pre-compiler/src/fail.rs /home/dev_lucasfs/Documents/carla/pre-compiler/src/lexer.rs /home/dev_lucasfs/Documents/carla/pre-compiler/src/main.rs
