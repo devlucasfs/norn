@@ -65,18 +65,14 @@ std::string precomp(ProjectData pdata) {
     while(true) {
         auto [ code, changed ] = make_it(src, size);
         if(! changed ) {
-            std::cout << code;
+            std::cout << code << '\n';
             return code;
         }
-
-        std::cout << "something was changed. \n " << code << "\n";
 
         src = std::vector<char>(code.begin(), code.end());
         size = src.size();
 
         result.clear();
-
-        std::cout << "size of result after clear: " << result.size() << "\n";
     }
 }
 
@@ -110,7 +106,7 @@ std::pair<size_t, T> semi(size_t (*func)(const size_t, T*), const size_t i) {
     return { last + 1, value };
 }
 
-size_t import(const size_t i, std::string *result) {
+size_t norn_import(const size_t i, std::string *result, bool iterable = false) {
     /* const std  := @import("std");     -- Get from the std packages
      * const file := @import("./files"); -- Get from the files of your project.
      *                                   -- `./` defines if will catched by the project or the std. */
@@ -120,7 +116,7 @@ size_t import(const size_t i, std::string *result) {
     auto content = tokens.at(i + 2);
     if( content.kind != STRING ) CompilerOutputs::Fatal("The 1th argument need be a string.");
 
-    auto [ter, code] = is_a_valid_import(data, content.lexeme);
+    auto [ter, code] = is_a_valid_import(data, content.lexeme, iterable);
     if( ter.val == ternary::data::fl ) CompilerOutputs::Fatal(content.lexeme + " is an invalid import.");
 
     if(! is_close(i + 3) ) CompilerOutputs::Fatal("After an @import you need open a block.");
@@ -128,6 +124,13 @@ size_t import(const size_t i, std::string *result) {
     *result = code;
     return i + 3;
 }
+
+size_t import_ns(const size_t i, std::string *result)
+{ return norn_import(i, result, false); }
+
+size_t import_iter(const size_t i, std::string *result)
+{ return norn_import(i, result, true); }
+
 
 std::tuple<size_t, std::vector<char>> constant(const size_t i) {
     #undef IGNORE
@@ -139,7 +142,7 @@ std::tuple<size_t, std::vector<char>> constant(const size_t i) {
 
     switch( tokens.at(i + 3).kind ) {
         case IMPORT: {
-            auto [size, imported] = semi<std::string>(import, i + 3);
+            auto [size, imported] = semi<std::string>(import_ns, i + 3);
             auto final = "namespace " + identifier.lexeme + " { " + imported + " }; ";
             std::vector<char> chars(final.begin(), final.end());
             return { size, chars };
@@ -155,10 +158,9 @@ std::tuple<size_t, std::vector<char>> iterable(const size_t i) {
 
     switch( tokens.at(i + 1).kind ) {
         case IMPORT: {
-            auto [size, imported] = semi<std::string>(import, i + 1);
-            std::cout << "received size as " << size << " and i was " << i << "\n";
+            auto [size, imported] = semi<std::string>(import_iter, i + 1);
             std::vector<char> chars(imported.begin(), imported.end());
-            return { size - 1, chars };
+            return { size, chars };
         }
         default: IGNORE;
     }
