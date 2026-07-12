@@ -3,64 +3,91 @@
 
 #include <string>
 #define CARLA_FIELDS_TOKENS_KIND \
-    X(LEFT_PAREN) \
-    X(RIGHT_PAREN) \
-    X(LEFT_BRACE) \
-    X(RIGHT_BRACE) \
-    X(LEFT_BRACKET) \
-    X(RIGHT_BRACKET) \
-    X(COMMA) \
-    X(DOT) \
-    X(MINUS) \
-    X(PLUS) \
-    X(SEMICOLON) \
-    X(SLASH) \
-    X(STAR) \
-    X(PLUS_PLUS) \
-    X(MINUS_MINUS) \
-    X(QUAD) \
-    X(ITERABLE) \
-    X(COLON) \
-    X(COLON_EQUAL) \
-    X(ARROW) \
-    X(BANG) \
-    X(BANG_EQUAL) \
-    X(EQUAL) \
-    X(EQUAL_EQUAL) \
-    X(GREATER) \
-    X(GREATER_EQUAL) \
-    X(SHIFT_RIGHT) \
-    X(LESS) \
-    X(LESS_EQUAL) \
-    X(SHIFT_LEFT) \
-    X(SLASH_SLASH) \
-    X(IDENTIFIER) \
-    X(STRING) \
-    X(_FLOAT) \
-    X(INTEGER) \
-    X(INCLUDE) \
-    X(AND) \
-    X(OR) \
-    X(NIL) \
-    X(_FALSE) \
-    X(_TRUE) \
-    X(XOR) \
-    X(LAND) \
-    X(LOR) \
-    X(LNOT) \
-    X(_CONST) \
-    X(PLUS_EQUAL) \
-    X(MINUS_EQUAL) \
-    X(STAR_EQUAL) \
-    X(SLASH_EQUAL) \
-    X(CARLA_EOF) \
-    X(UNKNOWN_TK) \
+    X(LEFT_PAREN, "(") \
+    X(RIGHT_PAREN, ")") \
+    X(LEFT_BRACE, "{") \
+    X(RIGHT_BRACE, "}") \
+    X(LEFT_BRACKET, "[") \
+    X(RIGHT_BRACKET, "]") \
+ \
+    X(COMMA, ",") \
+    X(DOT, ".") \
+    X(MINUS, "-") \
+    X(PLUS, "+") \
+    X(SEMICOLON, ";") \
+    X(SLASH, "/") \
+    X(STAR, "*") \
+    X(PLUS_PLUS, "++") \
+    X(MINUS_MINUS, "--") \
+    X(QUAD, "::") \
+\
+    X(ITERABLE, "..") \
+    X(COLON, ":") \
+    X(COLON_EQUAL, ":=") \
+ \
+    X(ARROW, "->") \
+ \
+    X(BANG, "!") \
+    X(BANG_EQUAL, "!=") \
+    X(EQUAL, "=") \
+    X(EQUAL_EQUAL, "==") \
+    X(GREATER, ">") \
+    X(GREATER_EQUAL, ">=") \
+    X(SHIFT_RIGHT, ">>") \
+    X(LESS, "<") \
+    X(LESS_EQUAL, "<=") \
+    X(SHIFT_LEFT, "<<") \
+    X(SLASH_SLASH, "//") \
+ \
+    X(IDENTIFIER, "<identifier>") \
+    X(STRING, "<string>") \
+    X(_FLOAT, "<float>") \
+    X(INTEGER, "<integer>") \
+ \
+    X(AND, "and") \
+    X(OR, "or") \
+    X(NIL, "nil") \
+    X(_FALSE, "false") \
+    X(_TRUE, "true") \
+    X(XOR, "xor") \
+    X(LAND, "&") \
+    X(LOR, "|") \
+    X(LNOT, "~") \
+ \
+    X(_NAMESPACE, "namespace") \
+    X(RETURN, "return") \
+    X(PUTS, "puts") \
+    X(AUTO, "auto") \
+    X(OUR, "our") \
+    X(FOR, "for") \
+    X(STRUCT, "struct") \
+    X(ENUM, "enum") \
+    X(BREAK, "break") \
+    X(CONTINUE, "continue") \
+    X(GPIO, "gpio") \
+    X(IF, "if") \
+    X(_CONST, "const") \
+    X(_CONSTEXPR, "constexpr") \
+    X(ELSE, "else") \
+    X(LAYOUT, "layout") \
+    X(LET, "let") \
+    X(MUT, "mut") \
+    X(END_KEYWORDS, "<end_keywords>") \
     \
-    /* SPECIAL PRE-COMPILER TOKENS */ \
-    X(IMPORT) \
+    X(PLUS_EQUAL, "+=") \
+    X(MINUS_EQUAL, "-=") \
+    X(STAR_EQUAL, "*=") \
+    X(SLASH_EQUAL, "/=") \
+    \
+    X(START, "@_start") \
+    X(CAST, "@cast") \
+    X(DETACH, "@detach") \
+    \
+    X(CARLA_EOF, "<eof>") \
+    X(UNKNOWN_TK, "<unknown>") \
+    X(IMPORT, "@import")
 
-
-#define X(id) id,
+#define X(id, _) id,
 typedef enum { CARLA_FIELDS_TOKENS_KIND } TokenKind;
 #undef X
 
@@ -85,7 +112,7 @@ TokenSubKind getSub(TokenKind kind) {
 }
 
 std::string tokenKindToString(TokenKind kind) {
-    #define X(id) case id: return #id;
+    #define X(id, data) case id: return data;
     switch(kind) { CARLA_FIELDS_TOKENS_KIND }
     #undef X
 }

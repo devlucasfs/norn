@@ -1,0 +1,20 @@
+[
+  {
+    "file": "src/main.cpp",
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-g",
+      "-O0",
+      "-fPIC",
+      "-fpermissive",
+      "-fexceptions",
+      "src/main.cpp",
+      "-o",
+      "../build/norn",
+      "-Isrc/"
+    ],
+    "directory": "/home/dev_lucasfs/Documents/carla/norn",
+    "output": "../build/norn"
+  }
+]

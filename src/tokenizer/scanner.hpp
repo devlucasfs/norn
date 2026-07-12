@@ -25,7 +25,23 @@ std::vector<Token>
 Scanner::read(std::vector<char> source, std::streamsize size)
 {
     std::map<std::string, TokenKind> keywords = {
-        {"const", _CONST},
+        {"return", RETURN}, {"gpio", GPIO},
+        {"break", BREAK}, {"continue", CONTINUE},
+
+        {"struct", STRUCT}, {"enum", ENUM},
+
+        {"false", _FALSE}, {"true", _TRUE},
+        {"nil", NIL},
+
+        {"our", OUR}, {"const", _CONST},
+        {"constexpr", _CONSTEXPR}, {"namespace", _NAMESPACE},
+        {"if", IF}, {"else", ELSE},
+        {"layout", LAYOUT}, {"let", LET}, {"mut", MUT},
+        {"return", RETURN}, {"puts", PUTS},
+
+        {"@_start", START}, {"@cast", CAST},
+        {"@detach", DETACH},
+
         {"@import", IMPORT}
     };
 
@@ -49,10 +65,10 @@ Scanner::read(std::vector<char> source, std::streamsize size)
 
             case '(': addSimple(&tokens, LEFT_PAREN); break;
             case ')': addSimple(&tokens, RIGHT_PAREN); break;
-            case '[': addSimple(&tokens, LEFT_BRACE); break;
-            case ']': addSimple(&tokens, RIGHT_BRACE); break;
-            case '{': addSimple(&tokens, LEFT_BRACKET); break;
-            case '}': addSimple(&tokens, RIGHT_BRACKET); break;
+            case '[': addSimple(&tokens, LEFT_BRACKET); break;
+            case ']': addSimple(&tokens, RIGHT_BRACKET); break;
+            case '{': addSimple(&tokens, LEFT_BRACE); break;
+            case '}': addSimple(&tokens, RIGHT_BRACE); break;
 
             case '+':
             if( str[++i] == '+' ) addSimple(&tokens, PLUS_PLUS);
