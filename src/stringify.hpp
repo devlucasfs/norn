@@ -7,7 +7,7 @@
 #include <sstream>
 #include <vector>
 
-std::string printer(std::vector<Token> result) {
+std::string stringify(std::vector<Token> result) {
     std::stringstream ss;
 
     int tabs = 0;

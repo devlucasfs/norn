@@ -8,6 +8,7 @@
 
 #include "../ternary.hpp"
 #include "../project.hpp"
+#include "../file_parser.hpp"
 #include "outputs.hpp"
 
 std::vector<std::string> imports;
@@ -26,7 +27,7 @@ std::pair<ternary, std::string> is_a_valid_import(ProjectData& project, std::str
         auto path = std::filesystem::absolute(project.main);
         auto file = path.parent_path() / data.substr(2);
 
-        if( was_imported(file.string()) && iterable ) return { ternary(ternary::data::ne), "" };
+        if( was_imported(file.string()) && iterable ) return { ternary(ternary::data::ne), std::string() };
 
         if(! std::filesystem::exists(file) ) CompilerOutputs::Fatal("You can't import " + data + " because it was not found.");
         if( std::filesystem::is_directory(file) ) CompilerOutputs::Fatal("You can't import " + data + " because it is a directory.");
@@ -40,11 +41,13 @@ std::pair<ternary, std::string> is_a_valid_import(ProjectData& project, std::str
         std::vector<char> src(size);
         if(! content.read(src.data(), size) ) CompilerOutputs::Fatal("Can't read " + data);
 
-        if( iterable ) imports.push_back(file.string());
-
         std::string code(src.begin(), src.end());
-        return { ternary(ternary::data::tr), code };
+        auto fcontent = FileContent::from(code);
+
+        if( iterable && fcontent.fpragma == FileContent::once ) imports.push_back(file.string());
+
+        return { ternary(ternary::data::tr), fcontent.content };
     }
 
-    return { ternary(ternary::data::fl), "" };
+    return { ternary(ternary::data::fl), std::string() };
 }

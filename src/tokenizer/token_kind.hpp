@@ -85,7 +85,8 @@
     \
     X(CARLA_EOF, "<eof>") \
     X(UNKNOWN_TK, "<unknown>") \
-    X(IMPORT, "@import")
+    X(IMPORT, "@import") \
+    X(PRAGMA, "@pragma")
 
 #define X(id, _) id,
 typedef enum { CARLA_FIELDS_TOKENS_KIND } TokenKind;

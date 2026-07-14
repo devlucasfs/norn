@@ -7,11 +7,12 @@
 #include "tokenizer/token_kind.hpp"
 #include "extra/import.hpp"
 #include "ternary.hpp"
-#include "printer.hpp"
+#include "stringify.hpp"
 #include <fstream>
 #include <iostream>
 #include <vector>
 
+#undef IGNORE
 #define IGNORE return 0
 #define CHECK(fn) {                                  \
     auto [size, data] = fn(i);                       \
@@ -46,7 +47,7 @@ std::tuple<std::string, bool> make_it(std::vector<char> src, size_t size) {
         }
     }
 
-    return { printer(result), somechange };
+    return { stringify(result), somechange };
 };
 
 std::string precomp(ProjectData pdata) {

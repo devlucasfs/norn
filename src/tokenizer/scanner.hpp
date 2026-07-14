@@ -42,7 +42,7 @@ Scanner::read(std::vector<char> source, std::streamsize size)
         {"@_start", START}, {"@cast", CAST},
         {"@detach", DETACH},
 
-        {"@import", IMPORT}
+        {"@import", IMPORT}, {"@pragma", PRAGMA}
     };
 
     std::vector<Token> tokens;
