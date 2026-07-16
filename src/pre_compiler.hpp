@@ -65,10 +65,8 @@ std::string precomp(ProjectData pdata) {
 
     while(true) {
         auto [ code, changed ] = make_it(src, size);
-        if(! changed ) {
-            std::cout << code << '\n';
-            return code;
-        }
+        if(! changed ) return code;
+
 
         src = std::vector<char>(code.begin(), code.end());
         size = src.size();

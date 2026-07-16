@@ -14,7 +14,7 @@
       "../build/norn",
       "-Isrc/"
     ],
-    "directory": "/home/dev_lucasfs/Documents/carla/norn",
+    "directory": "/home/dev_lucasfs/Documents/norn",
     "output": "../build/norn"
   }
 ]
