@@ -8,6 +8,7 @@
 #include "extra/import.hpp"
 #include "ternary.hpp"
 #include "stringify.hpp"
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -17,7 +18,7 @@
 #define CHECK(fn) {                                  \
     auto [size, data] = fn(i);                       \
     if( size == 0 ) result.push_back(token);         \
-    i = size;                                        \
+    else i = size;                                   \
     auto tks = Scanner::read(data, data.size());     \
     for( Token tk : tks ) result.push_back(tk);      \
     if( size > 0 && !somechange ) somechange = true; \
@@ -29,6 +30,7 @@ ProjectData data;
 
 std::tuple<size_t, std::vector<char>> constant(const size_t i);
 std::tuple<size_t, std::vector<char>> iterable(const size_t i);
+std::tuple<size_t, std::vector<char>> double_literal_issue(const size_t i);
 
 std::tuple<std::string, bool> make_it(std::vector<char> src, size_t size) {
     bool somechange = false;
@@ -43,6 +45,7 @@ std::tuple<std::string, bool> make_it(std::vector<char> src, size_t size) {
         switch(token.kind) {
             case _CONST: CHECK(constant);
             case ITERABLE: CHECK(iterable);
+            // case CARLA_LNREPEAT_LITERAL: CHECK(double_literal_issue);
             default: result.push_back(token);
         }
     }
@@ -65,7 +68,13 @@ std::string precomp(ProjectData pdata) {
 
     while(true) {
         auto [ code, changed ] = make_it(src, size);
-        if(! changed ) return code;
+        if(! changed ) {
+            std::regex pattern(
+                R"((?:@lnrepeat\s+\d+\s*;\s*)+(@lnrepeat\s+\d+\s*;))"
+            );
+
+            return std::regex_replace(code, pattern, "$1");
+        };
 
         src = std::vector<char>(code.begin(), code.end());
         size = src.size();

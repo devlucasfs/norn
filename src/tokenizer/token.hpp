@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -19,6 +20,8 @@ struct Token {
         if( tokens.size() <= pos + 1 ) return 0;
 
         auto current = tokens.at(pos), next = tokens.at(pos + 1);
+
+        if( next.kind == PUSH_F || next.kind == CARLA_LNREPEAT_LITERAL ) return 1;
         return next.line - current.line;
     }
 };
@@ -31,6 +34,6 @@ Token::build(TokenKind kind, std::string lexeme, std::string typement, int line)
 std::string
 Token::to_string() {
     std::stringstream stream;
-    stream << "Token { buffer: `" << this->lexeme << "` kind: " << this->kind << " }";
+    stream << "Token { buffer: `" << this->lexeme << "` kind: " << tokenKindToString(this->kind) << " : " << this->kind <<  " line: " << this->line << " }";
     return stream.str();
 }

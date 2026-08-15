@@ -84,6 +84,8 @@
     X(DETACH, "@detach") \
     \
     X(CARLA_EOF, "<eof>") \
+    X(CARLA_LNREPEAT, "<LNREPEAT>") \
+    X(CARLA_LNREPEAT_LITERAL, "<LNREPEAT + LITERAL>") \
     X(UNKNOWN_TK, "<unknown>") \
     X(TYPED_PLACEHOLDER, "<placeholder:input>") \
     X(PLACEHOLDER, "<placeholder>") \

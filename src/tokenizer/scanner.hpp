@@ -46,6 +46,7 @@ Scanner::read(std::vector<char> source, std::streamsize size)
         {"@import", IMPORT}, {"@pragma", PRAGMA},
 
         {"@pushfile", PUSH_F}, {"@popfile", POP_F},
+        {"lnrepeat", CARLA_LNREPEAT_LITERAL}
     };
 
     std::vector<Token> tokens;
@@ -122,9 +123,21 @@ Scanner::read(std::vector<char> source, std::streamsize size)
             case ' ':
             continue;
 
-            case '\n':
-            line++;
-            break;
+            case '\n': {
+                int repeat = 1;
+
+                while( i + 1 < size && str[i + 1] == '\n' ) {
+                    i++;
+                    repeat++;
+                }
+
+                line += repeat;
+                if( repeat >= 2 ) {
+                    addSimple(&tokens, CARLA_LNREPEAT_LITERAL);
+                    addBuffer(&tokens, INTEGER, std::to_string(repeat));
+                    addSimple(&tokens, SEMICOLON);
+                }
+            } break;
 
             case '"':
             case '\'': {

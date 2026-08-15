@@ -20,6 +20,7 @@ std::string stringify(std::vector<Token> result) {
         #define X(kind, val) case kind: { ss << val; }break;
         switch(token.kind) {
             case LEFT_BRACE : { tabs++; } goto __continue;
+            case CARLA_LNREPEAT_LITERAL : ss << "@lnrepeat";
             case STRING : case IDENTIFIER:
             case INTEGER: case _FLOAT: {
                 ss << token.lexeme;
@@ -36,7 +37,9 @@ std::string stringify(std::vector<Token> result) {
 
         auto amount = Token::needsLineFeed(i, result);
         linefeed = amount > 0 && i < result.size() - 2;
-        if( linefeed ) ss << std::string(amount, '\n');
+        if( linefeed ) {
+            ss << std::string(amount, '\n');
+        }
     }
 
     return ss.str();
