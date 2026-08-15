@@ -13,6 +13,7 @@
 
 struct Scanner {
 private:
+    static void addTyped(std::vector<Token> *vec, TokenKind kind, std::string type, std::string buff);
     static void addBuffer(std::vector<Token> *vec, TokenKind kind, std::string buff);
     static void addSimple(std::vector<Token> *vec, TokenKind kind);
 public:
@@ -42,7 +43,9 @@ Scanner::read(std::vector<char> source, std::streamsize size)
         {"@_start", START}, {"@cast", CAST},
         {"@detach", DETACH},
 
-        {"@import", IMPORT}, {"@pragma", PRAGMA}
+        {"@import", IMPORT}, {"@pragma", PRAGMA},
+
+        {"@pushfile", PUSH_F}, {"@popfile", POP_F},
     };
 
     std::vector<Token> tokens;
@@ -138,6 +141,36 @@ Scanner::read(std::vector<char> source, std::streamsize size)
             buffer.str("");
             } break;
 
+            case '$': {
+                while(i + 1 < size) {
+                    char c2 = str[i + 1];
+                    if(! (std::isalnum(c2) || c2 == '_') ) break;
+                    buffer << c2;
+                    i++;
+                }
+
+                if( str[i + 1] == ':' ) {
+                    std::stringstream typement;
+                    i++;
+
+                    while(i + 1 < size) {
+                        char c2 = str[i + 1];
+                        if(! (std::isalnum(c2) || c2 == '_') ) break;
+                        typement << c2;
+                        i++;
+                    }
+
+                    addTyped(&tokens, TYPED_PLACEHOLDER, typement.str(), buffer.str());
+                    buffer.str("");
+                    buffer.clear();
+                    break;
+                }
+
+                addBuffer(&tokens, PLACEHOLDER, buffer.str());
+                buffer.str("");
+                buffer.clear();
+            } break;
+
             case '@':
             case 'a' ... 'z':
             case 'A' ... 'Z':
@@ -199,8 +232,12 @@ Scanner::read(std::vector<char> source, std::streamsize size)
 
 void
 Scanner::addSimple(std::vector<Token> *vec, TokenKind kind)
-{ (*vec).push_back(Token::build(kind, "", line)); }
+{ (*vec).push_back(Token::build(kind, "", "", line)); }
 
 void
 Scanner::addBuffer(std::vector<Token> *vec, TokenKind kind, std::string buff)
-{ (*vec).push_back(Token::build(kind, buff, line)); }
+{ (*vec).push_back(Token::build(kind, buff, "", line)); }
+
+void
+Scanner::addTyped(std::vector<Token> *vec, TokenKind kind, std::string type, std::string buff)
+{ (*vec).push_back(Token::build(kind, buff, type, line)); }

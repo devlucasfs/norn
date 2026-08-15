@@ -4,6 +4,7 @@
 #include "tokenizer/scanner.hpp"
 #include "tokenizer/token.hpp"
 #include "tokenizer/token_kind.hpp"
+#include <filesystem>
 #include <string>
 #include <vector>
 
@@ -27,7 +28,7 @@ struct FileContent {
         : content(content),
           fpragma(once) {}
 
-    static FileContent from(std::string content) {
+    static FileContent from(std::string content, std::string file = "") {
         size_t size = content.size();
         std::vector<char> src = std::vector<char>(content.begin(), content.end());
         auto tokens = Scanner::read(src, size);
@@ -43,7 +44,10 @@ struct FileContent {
             }
         }
 
-        resolve.content = stringify(result);
+        resolve.content =
+            "@pushfile \"" + std::filesystem::absolute(file).string() + "\";\n" +
+            stringify(result) + "\n"
+            "@popfile\n";
         return resolve;
     }
 

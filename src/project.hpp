@@ -4,7 +4,6 @@
 #include "eva.hpp"
 #include <stdexcept>
 #include <string>
-#include <vector>
 
 struct ProjectData {
     std::string binary;
@@ -26,7 +25,7 @@ struct ProjectData {
             result.main = "./src/main.crl";
         }
 
-        try { auto [_, binary]   = driver.get<std::string>("precompiler", "bin");
+        try { auto [_, binary]   = driver.get<std::string>("precompiler", "name");
               result.binary = binary;
               if( binary != norn && binary != "norn" )
                   CompilerOutputs::Warn("Your target there isn't Norn as your pre-compiler. Is recommended use the defined pre-compiler. But this time Norn will be used.\n");

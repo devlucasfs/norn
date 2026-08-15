@@ -67,7 +67,6 @@ std::string precomp(ProjectData pdata) {
         auto [ code, changed ] = make_it(src, size);
         if(! changed ) return code;
 
-
         src = std::vector<char>(code.begin(), code.end());
         size = src.size();
 
@@ -129,7 +128,6 @@ size_t import_ns(const size_t i, std::string *result)
 
 size_t import_iter(const size_t i, std::string *result)
 { return norn_import(i, result, true); }
-
 
 std::tuple<size_t, std::vector<char>> constant(const size_t i) {
     #undef IGNORE

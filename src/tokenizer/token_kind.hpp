@@ -85,8 +85,13 @@
     \
     X(CARLA_EOF, "<eof>") \
     X(UNKNOWN_TK, "<unknown>") \
+    X(TYPED_PLACEHOLDER, "<placeholder:input>") \
+    X(PLACEHOLDER, "<placeholder>") \
+    X(PUSH_F, "@pushfile") \
+    X(POP_F, "@popfile") \
     X(IMPORT, "@import") \
-    X(PRAGMA, "@pragma")
+    X(PRAGMA, "@pragma") \
+    X(DEFINE, "@define")
 
 #define X(id, _) id,
 typedef enum { CARLA_FIELDS_TOKENS_KIND } TokenKind;

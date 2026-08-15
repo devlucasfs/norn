@@ -2,21 +2,30 @@
 
 #include <sstream>
 #include <string>
+#include <vector>
 #include "token_kind.hpp"
 
-typedef struct Token {
+struct Token {
   public:
     TokenKind kind;
     std::string lexeme;
+    std::string typement;
     int line;
 
-    static struct Token build(TokenKind kind, std::string lexeme, int line);
+    static Token build(TokenKind kind, std::string lexeme, std::string typement, int line);
     std::string to_string();
-} Token;
+
+    static int needsLineFeed(int pos, std::vector<Token> tokens) {
+        if( tokens.size() <= pos + 1 ) return 0;
+
+        auto current = tokens.at(pos), next = tokens.at(pos + 1);
+        return next.line - current.line;
+    }
+};
 
 Token
-Token::build(TokenKind kind, std::string lexeme, int line) {
-    return (Token) { kind, lexeme, line };
+Token::build(TokenKind kind, std::string lexeme, std::string typement, int line) {
+    return (Token) { kind, lexeme, typement, line };
 }
 
 std::string

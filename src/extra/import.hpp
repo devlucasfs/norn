@@ -42,7 +42,7 @@ std::pair<ternary, std::string> is_a_valid_import(ProjectData& project, std::str
         if(! content.read(src.data(), size) ) CompilerOutputs::Fatal("Can't read " + data);
 
         std::string code(src.begin(), src.end());
-        auto fcontent = FileContent::from(code);
+        auto fcontent = FileContent::from(code, file);
 
         if( iterable && fcontent.fpragma == FileContent::once ) imports.push_back(file.string());
 
