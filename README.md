@@ -26,7 +26,7 @@ All you need to do a compatible precompiler, is respect 2 simple things:
 For example, when Carla runs Norn, Carla do:
 ```sh-session
 norn "main absolute path" "output absolute path"
-``
+```
 
 That means: That's all you need. 
 
