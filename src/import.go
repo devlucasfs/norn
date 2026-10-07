@@ -20,7 +20,7 @@ func ValidatePath(filename string) string {
 		 * and then concat it with the OS path separator
 		 * and the import relative path */
 		directory := filepath.Dir(Ginfo.Main)
-		relative := "./" + filepath.Join(directory, filename)
+		relative := filepath.Join(directory, filename)
 
 		/* Transform the relative path in a absolute path
 		 * and return a error if fail */
