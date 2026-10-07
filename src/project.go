@@ -21,8 +21,8 @@ func GetInfo() (*Info, error) {
 
 	content := Info{
 		Bin:    args[0],
-		Main:   args[2],
-		Output: args[3],
+		Main:   args[1],
+		Output: args[2],
 	}
 
 	return &content, nil
