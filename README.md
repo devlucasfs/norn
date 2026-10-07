@@ -1,6 +1,6 @@
 # Norn precompiler
 
-Norn is the [Carla language](https://github.com/devlucasfs/carla) official precompiler. When u download Carla Norn is already downloaded too. 
+Norn is the [**Carla language**](https://github.com/devlucasfs/carla) official precompiler. When u download Carla, Norn is already downloaded too. 
 
 You can see if the project is using Norn just looking the `target.eva` file.
 ```eva
