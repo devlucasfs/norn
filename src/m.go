@@ -1,5 +1,9 @@
 package main
 
+import (
+	"os"
+)
+
 func main() {
 	info, err := GetInfo()
 	if err != nil {
@@ -7,5 +11,7 @@ func main() {
 	}
 
 	LexerInit()
-	Parser(info)
+	if err := os.WriteFile(info.Output, Parser(info), 0644); err != nil {
+		DefaultOutputs.Fatal(err)
+	}
 }

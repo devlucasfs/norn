@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 )
 
 const semicolonError = "An expression need be finished with a ;"
@@ -73,7 +72,7 @@ func Runner(file *CarlaFile) {
 	}
 }
 
-func Parser(info *Info) {
+func Parser(info *Info) []byte {
 	Ginfo = info
 
 	file := NewCarlaFile(info.Main)
@@ -93,5 +92,5 @@ func Parser(info *Info) {
 		file.Length = uint64(len(file.Content))
 	}
 
-	fmt.Println(string(file.Content))
+	return file.Content
 }
