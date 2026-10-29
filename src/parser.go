@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 )
 
 const semicolonError = "An expression need be finished with a ;"
@@ -52,6 +53,41 @@ func PDettach(file *CarlaFile, data Token) {
 	}
 }
 
+func PStart(file *CarlaFile, data Token) {
+	next := file.Next();
+	file.Back(next);
+	file.Slice = append(file.Slice, ReplaceTokens{
+		Start: data,
+		End:   next,
+		Code:  "..@import(\"entry\");\n",
+	})
+}
+
+func PNullptr(file *CarlaFile, data Token) {
+	next := file.Next();
+	file.Back(next);
+	file.Slice = append(file.Slice, ReplaceTokens{
+		Start: data,
+		End:   next,
+		Code:  "\"\" as generic_ptr",
+	})
+}
+
+
+func PUncert(file *CarlaFile, data Token) {
+	parenError := "@uncert is an builtin statement who needs parenthesis to be used, as a function"
+	AssertExpect(file, errors.New(parenError), KLeftParen)
+	ty := AssertExpect(file, errors.New(parenError), KIdentifier)
+	paren := AssertExpect(file, errors.New(parenError), KRightParen)
+
+	paren.Col += 1;
+	file.Slice = append(file.Slice, ReplaceTokens{
+		Start: data,
+		End:   paren,
+		Code:  fmt.Sprintf("|%s, error|", ty.Lex),
+	})
+}
+
 func Runner(file *CarlaFile) {
 	for {
 		data := file.Next()
@@ -62,6 +98,12 @@ func Runner(file *CarlaFile) {
 		switch data.Kind {
 		case KConst:
 			PConst(file, data)
+		case KStart:
+			PStart(file, data)
+		case KUncert:
+			PUncert(file, data)
+		case KNullptr:
+			PNullptr(file, data)
 		case KDettach:
 			PDettach(file, data)
 		}

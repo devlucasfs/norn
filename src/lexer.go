@@ -22,6 +22,10 @@ const (
 	KBool
 	KConst
 	KIdentifier
+	KStart
+	KUncert
+	KNullptr
+	KAuto
 	KEOF
 )
 
@@ -63,6 +67,10 @@ func LexerInit() {
 		newTokenLex("=", KSign),
 		newTokenLex(":=", KGenericSign),
 		newTokenLex("const", KConst),
+		newTokenLex("nullptr", KNullptr),
+		newTokenLex("@_start", KStart),
+		newTokenLex("@uncert", KUncert),
+		newTokenLex("auto", KAuto),
 		newTokenLex("false", KBool),
 		newTokenLex("true", KBool),
 		newTokenLex("nil", KNil),

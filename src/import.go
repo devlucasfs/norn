@@ -47,7 +47,7 @@ func ValidatePath(filename string) string {
 	 * it's needed to check the path of Carla libraries
 	 * and then make check if the library really exists */
 	home := os.Getenv("HOME")
-	path := filepath.Join(home, ".carla", "libs", filename)
+	path := filepath.Join(home, ".carla", "libs", filename + ".crl")
 
 	/* If doesn't exist, return a error */
 	if _, err := os.ReadFile(path); err != nil {
@@ -106,11 +106,9 @@ func ConstImportNamespace(file *CarlaFile, namespace, str string, _const, semi T
 
 	/* Add in file content the file position
 	 * stack push and pop */
-	line := "@pushfile \"" + path + "\"\n"
-	line += "const " + namespace + " = namespace {\n"
-	line += GetFileContent(path, true)
-	line += "}\n"
-	line += "@popfile"
+	// line := "@pushfile \"" + path + "\";\n"
+	line := "namespace " + namespace + " { " + GetFileContent(path, true) + " }\n"
+	// line += "@popfile"
 
 	semi.Col += 1
 	file.Slice = append(file.Slice, ReplaceTokens{
@@ -128,9 +126,9 @@ func DettachImport(file *CarlaFile, str string, dettach, semi Token) {
 	/* Add in file content the file position
 	 * stack push and pop */
 	content := GetFileContent(path, false)
-	line := "@pushfile \"" + path + "\"\n"
-	line += content
-	line += "@popfile"
+	// line := "@pushfile \"" + path + "\";\n"
+	line := content
+	// line += "@popfile"
 
 	/* An dettach can't be bypassed! */
 	if len(content) == 0 {
