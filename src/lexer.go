@@ -26,6 +26,7 @@ const (
 	KUncert
 	KNullptr
 	KAuto
+	KUsing
 	KEOF
 )
 
@@ -68,6 +69,7 @@ func LexerInit() {
 		newTokenLex(":=", KGenericSign),
 		newTokenLex("const", KConst),
 		newTokenLex("nullptr", KNullptr),
+		newTokenLex("using", KUsing),
 		newTokenLex("@_start", KStart),
 		newTokenLex("@uncert", KUncert),
 		newTokenLex("auto", KAuto),
@@ -172,7 +174,6 @@ func (file *CarlaFile) Next() Token {
 
 		start := file.Position
 
-		// Identificadores e palavras
 		if unicode.IsLetter(char) || char == '_' || char == '@' {
 			file.Position += uint64(size)
 
@@ -193,7 +194,6 @@ func (file *CarlaFile) Next() Token {
 			)
 		}
 
-		// Números
 		if unicode.IsDigit(char) {
 			hasDot := false
 
@@ -227,7 +227,6 @@ func (file *CarlaFile) Next() Token {
 			)
 		}
 
-		// Strings
 		if char == '"' {
 			file.Position += uint64(size)
 
@@ -264,7 +263,6 @@ func (file *CarlaFile) Next() Token {
 			}
 		}
 
-		// Delimitadores
 		if char == '(' {
 			file.Position += uint64(size)
 
@@ -309,7 +307,6 @@ func (file *CarlaFile) Next() Token {
 			}
 		}
 
-		// Operadores
 		if isOperatorChar(char) {
 			file.Position += uint64(size)
 
@@ -354,7 +351,6 @@ func (file *CarlaFile) Next() Token {
 			)
 		}
 
-		// Desconhecido
 		file.Position += uint64(size)
 
 		return Token{

@@ -54,8 +54,8 @@ func PDettach(file *CarlaFile, data Token) {
 }
 
 func PStart(file *CarlaFile, data Token) {
-	next := file.Next();
-	file.Back(next);
+	next := file.Next()
+	file.Back(next)
 	file.Slice = append(file.Slice, ReplaceTokens{
 		Start: data,
 		End:   next,
@@ -64,8 +64,8 @@ func PStart(file *CarlaFile, data Token) {
 }
 
 func PNullptr(file *CarlaFile, data Token) {
-	next := file.Next();
-	file.Back(next);
+	next := file.Next()
+	file.Back(next)
 	file.Slice = append(file.Slice, ReplaceTokens{
 		Start: data,
 		End:   next,
@@ -73,19 +73,28 @@ func PNullptr(file *CarlaFile, data Token) {
 	})
 }
 
-
 func PUncert(file *CarlaFile, data Token) {
 	parenError := "@uncert is an builtin statement who needs parenthesis to be used, as a function"
 	AssertExpect(file, errors.New(parenError), KLeftParen)
 	ty := AssertExpect(file, errors.New(parenError), KIdentifier)
 	paren := AssertExpect(file, errors.New(parenError), KRightParen)
 
-	paren.Col += 1;
+	paren.Col += 1
 	file.Slice = append(file.Slice, ReplaceTokens{
 		Start: data,
 		End:   paren,
 		Code:  fmt.Sprintf("|%s, error|", ty.Lex),
 	})
+}
+
+func PUsing(file *CarlaFile, data Token) {
+	id := AssertExpect(file, errors.New("A using declaration need an identifier."), KIdentifier)
+	AssertExpect(file, errors.New("A using declaration need a sign operator"), KSign)
+
+	next := file.Next()
+	if next.Lex == "enum" {
+		PUsingEnum(file, data, id)
+	}
 }
 
 func Runner(file *CarlaFile) {
@@ -96,6 +105,8 @@ func Runner(file *CarlaFile) {
 		}
 
 		switch data.Kind {
+		case KUsing:
+			PUsing(file, data)
 		case KConst:
 			PConst(file, data)
 		case KStart:
@@ -106,6 +117,8 @@ func Runner(file *CarlaFile) {
 			PNullptr(file, data)
 		case KDettach:
 			PDettach(file, data)
+		case KIdentifier:
+			PEnumValue(file, data)
 		}
 
 		if len(file.Slice) > 0 {
@@ -116,6 +129,7 @@ func Runner(file *CarlaFile) {
 
 func Parser(info *Info) []byte {
 	Ginfo = info
+	Enums = make(map[string]map[string]EnumValue)
 
 	file := NewCarlaFile(info.Main)
 
